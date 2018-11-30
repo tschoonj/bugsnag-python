@@ -13,6 +13,7 @@ import warnings
 
 from bugsnag.sessiontracker import SessionMiddleware
 from bugsnag.middleware import DefaultMiddleware, MiddlewareStack
+from bugsnag.flask import RequestMiddleware as FlaskRequestMiddleware
 from bugsnag.utils import fully_qualified_class_name, ThreadLocals
 from bugsnag.delivery import create_default_delivery
 
@@ -84,6 +85,7 @@ class Configuration(_BaseConfiguration):
         self.internal_middleware = MiddlewareStack()
         self.internal_middleware.append(DefaultMiddleware)
         self.internal_middleware.append(SessionMiddleware)
+        self.internal_middleware.append(FlaskRequestMiddleware)
 
         self.proxy_host = None
 
