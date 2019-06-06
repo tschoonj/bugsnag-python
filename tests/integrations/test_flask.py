@@ -45,6 +45,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         self.assertEqual(payload['events'][0]['exceptions'][0]['errorClass'],
                          'test_flask.SentinelError')
         self.assertEqual(payload['events'][0]['metaData']['request']['url'],
@@ -63,6 +64,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         self.assertEqual(payload['events'][0]['metaData']['request']['url'],
                          'http://localhost/hello')
 
@@ -83,11 +85,13 @@ class TestFlask(IntegrationTest):
             client.get('/hello')
 
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['metaData'].get('hello'), None)
         self.assertEqual(event['metaData']['again']['hello'], 'world')
 
         payload = self.server.received[1]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['metaData']['hello']['world'], 'once')
         self.assertEqual(event['metaData'].get('again'), None)
@@ -106,6 +110,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['exceptions'][0]['errorClass'],
                          'test_flask.SentinelError')
@@ -126,6 +131,7 @@ class TestFlask(IntegrationTest):
             '/ajax', data='{"key": "value"', content_type='application/json')
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['exceptions'][0]['errorClass'],
                          'test_flask.SentinelError')
@@ -149,6 +155,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['metaData']['account']['premium'], False)
         self.assertEqual(event['metaData']['account']['id'], 1)
@@ -166,6 +173,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertEqual(event['exceptions'][0]['errorClass'],
                          'test_flask.SentinelError')
@@ -188,6 +196,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         self.assertEqual(payload['events'][0]['context'],
                          'custom_context_notification_testing')
 
@@ -203,6 +212,7 @@ class TestFlask(IntegrationTest):
 
         self.assertEqual(1, len(self.server.received))
         payload = self.server.received[0]['json_body']
+        print(payload)
         event = payload['events'][0]
         self.assertTrue(event['unhandled'])
         self.assertEqual(event['severityReason'], {
